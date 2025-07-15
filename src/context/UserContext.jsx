@@ -12,12 +12,20 @@ const UserContext = ({ children }) => {
 
   const handleCurrentUser = async () => {
     try {
-      const result = await axios.get(`${serverURL}/api/user/current`, { withCredentials: true })
-      setUserData(result.data)
-      console.log(result.data);
+      const result = await axios.get(`${serverURL}/api/user/current`, {
+        withCredentials: true,
+      });
 
+      if (result.data && result.data.user) {
+        setUserData(result.data.user);
+        console.log("Current user:", result.data.user);
+      } else {
+        setUserData(null);
+        console.log("No user found (user not logged in).");
+      }
     } catch (error) {
-      console.log(error);
+      console.error("Error in handleCurrentUser:", error.response?.data?.message || error.message);
+      setUserData(null);
     }
   }
 
@@ -36,10 +44,12 @@ const UserContext = ({ children }) => {
   }
 
 
-  useEffect(() => {
-    const cookieExists = document.cookie.includes("token=");
-    if (cookieExists) {
+ useEffect(() => {
+    const tokenExists = document.cookie.includes("token=");
+    if (tokenExists) {
       handleCurrentUser();
+    } else {
+      console.log("No token found in cookies, skipping current user fetch.");
     }
   }, []);
 
