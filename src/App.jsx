@@ -13,7 +13,7 @@ const App = () => {
 
   // Show loading until userData is resolved (null or object)
   if (userData === undefined) {
-    return <div>Loading...</div>
+    return <div>Loading..</div>
   } 
 
   return (
