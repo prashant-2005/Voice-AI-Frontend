@@ -26,8 +26,6 @@ const SignIn = () => {
         email,password
       },{withCredentials:true})
       setUserData(result.data) ;
-      console.log(result.data);
-      
        setLoading(false) 
        navigate("/")
     } catch (error) {

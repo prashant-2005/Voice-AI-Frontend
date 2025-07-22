@@ -7,7 +7,6 @@ export const userDataContext = createContext();
 
 const UserContext = ({ children }) => {
   const serverURL = import.meta.env.VITE_BACKEND_URL;
-  
   const [userData, setUserData] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
 
